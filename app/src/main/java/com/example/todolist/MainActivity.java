@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
 //        rcv.setHasFixedSize(true);
         rcv.setLayoutManager(new LinearLayoutManager(this));
 
-        //listItems.add(new ListItem("First Todo!"));
-
         //TODO: Database access. Edit read write method and implement appropriately.
 
         rcv.setAdapter(new MyAdapter(this, listItems));
