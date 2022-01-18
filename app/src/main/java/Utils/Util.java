@@ -1,12 +1,12 @@
 package Utils;
 
 public class Util {
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "todosDB";
-    private static final String TABLE_NAME = "todos";
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "todosDB";
+    public static final String TABLE_NAME = "todos";
 
-    private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_COMPLETED = "completed";
+    public static final String KEY_ID = "id";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_COMPLETED = "completed";
 
 }
