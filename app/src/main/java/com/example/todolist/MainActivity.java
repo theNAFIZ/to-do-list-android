@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,14 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.MyAdapter;
-import Model.ListItem;
+import Model.Todo;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText input;
     private Button btn;
     private RecyclerView rcv;
-    private List<ListItem> listItems;
+    private List<Todo> listItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
             while( (tempString = bufferedReader.readLine()) != null) {
 
-                listItems.add(new ListItem(tempString));
+                listItems.add(new Todo(tempString, false));
                 stringBuilder.append(tempString);
 
             }

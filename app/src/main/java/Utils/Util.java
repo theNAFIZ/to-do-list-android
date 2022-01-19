@@ -6,7 +6,7 @@ public class Util {
     public static final String TABLE_NAME = "todos";
 
     public static final String KEY_ID = "id";
-    public static final String KEY_NAME = "name";
+    public static final String KEY_TITLE = "title";
     public static final String KEY_COMPLETED = "completed";
 
 }

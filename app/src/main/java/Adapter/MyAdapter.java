@@ -13,13 +13,13 @@ import com.example.todolist.R;
 
 import java.util.List;
 
-import Model.ListItem;
+import Model.Todo;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     private Context context;
-    private List<ListItem> listItems;
+    private List<Todo> listItems;
 
-    public MyAdapter(Context context, List<ListItem> listItems) {
+    public MyAdapter(Context context, List<Todo> listItems) {
         this.context = context;
         this.listItems = listItems;
     }
@@ -32,7 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
-        ListItem item = listItems.get(position);
+        Todo item = listItems.get(position);
         holder.title.setText(item.getTitle());
     }
 
