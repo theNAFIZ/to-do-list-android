@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import Model.Todo;
 import Utils.Util;
 
@@ -55,5 +58,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         Todo todo= new Todo(Integer.parseInt(cursor.getString(0)), cursor.getString(1), Boolean.getBoolean(cursor.getString(2)));
 
         return todo;
+    }
+
+    public List<Todo> getAllTodos() {
+        SQLiteDatabase database = this.getReadableDatabase();
+        List<Todo> todos = new ArrayList<>();
+
+        String selectAll = "SELECT * FROM " + Util.TABLE_NAME;
+
+        Cursor cursor = database.rawQuery(selectAll, null);
+        if (cursor.moveToFirst()) {
+            do {
+                Todo todo = new Todo();
+                todo.setId(Integer.parseInt(cursor.getString(0)));
+                todo.setTitle(cursor.getString(1));
+                todo.setCompleted(Boolean.getBoolean(cursor.getString(2)));
+
+                todos.add(todo);
+            } while (cursor.moveToNext());
+        }
+        return todos;
     }
 }
