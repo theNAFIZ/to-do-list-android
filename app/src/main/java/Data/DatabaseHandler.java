@@ -79,4 +79,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
         return todos;
     }
+
+    public int updateTodo(Todo todo) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(Util.KEY_TITLE, todo.getTitle());
+        values.put(Util.KEY_COMPLETED, todo.isCompleted());
+
+        return database.update(Util.TABLE_NAME, values, Util.KEY_ID + "=?",
+                new String[] {String.valueOf(todo.getId())});
+    }
+
+    public void deleteTodo(Todo todo) {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        database.delete(Util.TABLE_NAME, Util.KEY_ID + "=?", new String[] {String.valueOf(todo.getId())});
+
+        database.close();
+    }
 }
