@@ -22,12 +22,12 @@
         <EditText
             android:id="@+id/inputbox"
             android:layout_width="362dp"
-            android:layout_height="181dp"
+            android:layout_height="50dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/hint"
             android:importantForAutofill="no"
-            android:inputType="textMultiLine"
+            android:inputType="text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.489"
@@ -40,18 +40,20 @@
             android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/save"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputbox"
-            app:layout_constraintVertical_bias="0.100000024" />
+            app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvID"
         android:layout_width="363dp"
-        android:layout_height="332dp"
+        android:layout_height="405dp"
         android:translationX="24dp"
         android:translationY="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
