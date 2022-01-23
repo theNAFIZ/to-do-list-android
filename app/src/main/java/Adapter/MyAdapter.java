@@ -43,13 +43,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
-        public Button btn;
+        public Button editBtn;
+        public Button deleteBtn;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.itemName);
-            btn = itemView.findViewById(R.id.dltBtn);
+            editBtn = itemView.findViewById(R.id.editBtn);
+            deleteBtn = itemView.findViewById(R.id.dltBtn);
 
 //            btn.setOnClickListener(this);
         }
