@@ -1,12 +1,15 @@
 package com.example.todolist;
 
+import android.os.Bundle;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
+import android.widget.EditText;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.widget.Button;
-import android.widget.EditText;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
         btn = (Button) findViewById(R.id.saveBtn);
 
         btn.setOnClickListener(view -> {
+            input.onEditorAction(EditorInfo.IME_ACTION_DONE);
             String msg = input.getText().toString();
             if (!msg.equals("")) {
                 Todo todo = new Todo(msg, false);
                 dbHandler.addTodo(todo);
+                Snackbar.make(view, "Item saved!",Snackbar.LENGTH_LONG).show();
                 input.setText("");
                 reloadList();
             }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +14,7 @@ import com.example.todolist.R;
 
 import java.util.List;
 
+import Data.DatabaseHandler;
 import Model.Todo;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
@@ -41,7 +43,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return listItems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
         public Button editBtn;
         public Button deleteBtn;
@@ -53,7 +55,35 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             editBtn = itemView.findViewById(R.id.editBtn);
             deleteBtn = itemView.findViewById(R.id.dltBtn);
 
-//            btn.setOnClickListener(this);
+            deleteBtn.setOnClickListener(this);
+
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.editBtn:
+                    //Todo: Add functionality
+                    break;
+                case R.id.dltBtn:
+                    //Todo: Add confirm dialog box
+                    delete();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void delete() {
+            DatabaseHandler dbHandler = new DatabaseHandler(context);
+            int position = getAdapterPosition();
+            dbHandler.deleteTodo(listItems.get(position));
+            listItems.remove(position);
+            Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
+            notifyItemRemoved(position);
         }
     }
+
+
 }
