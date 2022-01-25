@@ -3,4 +3,6 @@
     <string name="hint">Enter Your To-Do Item Here</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="completed">Completed</string>
 </resources>
