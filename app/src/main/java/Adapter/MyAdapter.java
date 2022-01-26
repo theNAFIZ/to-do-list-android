@@ -1,11 +1,13 @@
 package Adapter;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,10 +36,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
         Todo item = listItems.get(position);
         holder.title.setText(item.getTitle());
+        if (item.isCompleted()) {
+            holder.status.setText("Completed!");
+        } else {
+            holder.status.setText("On progress!");
+
+        }
     }
 
     @Override
@@ -47,6 +56,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
+        public TextView status;
         public Button editBtn;
         public Button deleteBtn;
         public LayoutInflater inflater;
@@ -57,11 +67,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             super(itemView);
 
             title = itemView.findViewById(R.id.itemName);
+            status = itemView.findViewById(R.id.itemStatus);
             editBtn = itemView.findViewById(R.id.editBtn);
             deleteBtn = itemView.findViewById(R.id.dltBtn);
 
+            editBtn.setOnClickListener(this);
             deleteBtn.setOnClickListener(this);
-
 
         }
 
@@ -70,10 +81,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             switch (view.getId()) {
                 case R.id.editBtn:
                     edit();
-                    //Todo: Add functionality
                     break;
                 case R.id.dltBtn:
-                    //Todo: Add confirm dialog box
                     delete();
                     break;
                 default:
@@ -82,10 +91,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         }
 
         public void edit() {
+            int position = getAdapterPosition();
+            Todo todo = listItems.get(position);
+
             builder = new AlertDialog.Builder(context);
             inflater = LayoutInflater.from(context);
             final View view = inflater.inflate(R.layout.input_form, null);
+
             EditText editTextInput = view.findViewById(R.id.dInputBox);
+            editTextInput.setText(todo.getTitle());
+
+            CheckBox editCompleted = view.findViewById(R.id.completedBox);
+            editCompleted.setChecked(todo.isCompleted());
+
             Button updateButton = view.findViewById(R.id.updateBtn);
 
             builder.setView(view);
@@ -94,13 +112,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
             updateButton.setOnClickListener(v -> {
                 DatabaseHandler dbHandler = new DatabaseHandler(context);
-                int position = getAdapterPosition();
-                Todo todo = listItems.get(position);
                 if (!editTextInput.getText().toString().isEmpty()) {
                     todo.setTitle(editTextInput.getText().toString());
+                    todo.setCompleted(editCompleted.isChecked());
                     dbHandler.updateTodo(todo);
                     Toast.makeText(context, "Updated!", Toast.LENGTH_SHORT).show();
                     notifyItemChanged(position, todo);
+                    dialog.dismiss();
                 }
 
             });
