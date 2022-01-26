@@ -1,10 +1,12 @@
 package Adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +49,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public TextView title;
         public Button editBtn;
         public Button deleteBtn;
+        public LayoutInflater inflater;
+        public AlertDialog.Builder builder;
+        public AlertDialog dialog;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -64,6 +69,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.editBtn:
+                    edit();
                     //Todo: Add functionality
                     break;
                 case R.id.dltBtn:
@@ -73,6 +79,31 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                 default:
                     break;
             }
+        }
+
+        public void edit() {
+            builder = new AlertDialog.Builder(context);
+            inflater = LayoutInflater.from(context);
+            final View view = inflater.inflate(R.layout.input_form, null);
+            EditText editTextInput = view.findViewById(R.id.dInputBox);
+            Button updateButton = view.findViewById(R.id.updateBtn);
+
+            builder.setView(view);
+            dialog = builder.create();
+            dialog.show();
+
+            updateButton.setOnClickListener(v -> {
+                DatabaseHandler dbHandler = new DatabaseHandler(context);
+                int position = getAdapterPosition();
+                Todo todo = listItems.get(position);
+                if (!editTextInput.getText().toString().isEmpty()) {
+                    todo.setTitle(editTextInput.getText().toString());
+                    dbHandler.updateTodo(todo);
+                    Toast.makeText(context, "Updated!", Toast.LENGTH_SHORT).show();
+                    notifyItemChanged(position, todo);
+                }
+
+            });
         }
 
         public void delete() {
