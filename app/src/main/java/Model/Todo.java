@@ -26,7 +26,6 @@ public class Todo {
         this.id = id;
     }
 
-
     public boolean isCompleted() {
         return completed;
     }

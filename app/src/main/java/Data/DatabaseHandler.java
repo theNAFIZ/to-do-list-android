@@ -72,7 +72,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Todo todo = new Todo();
                 todo.setId(Integer.parseInt(cursor.getString(0)));
                 todo.setTitle(cursor.getString(1));
-                todo.setCompleted(Boolean.getBoolean(cursor.getString(2)));
+                if(cursor.getString(2).equals("1")) {
+                    todo.setCompleted(true);
+                } else {
+                    todo.setCompleted(false);
+                }
 
                 todos.add(todo);
             } while (cursor.moveToNext());
@@ -86,7 +90,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(Util.KEY_TITLE, todo.getTitle());
         values.put(Util.KEY_COMPLETED, todo.isCompleted());
-
         return database.update(Util.TABLE_NAME, values, Util.KEY_ID + "=?",
                 new String[] {String.valueOf(todo.getId())});
     }

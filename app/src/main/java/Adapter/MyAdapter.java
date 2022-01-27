@@ -1,6 +1,5 @@
 package Adapter;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -36,15 +35,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
-    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder( ViewHolder holder, int position) {
         Todo item = listItems.get(position);
         holder.title.setText(item.getTitle());
-        if (item.isCompleted()) {
-            holder.status.setText("Completed!");
-        } else {
+        if (!item.isCompleted()) {
             holder.status.setText("On progress!");
+        } else {
+            holder.status.setText("Completed!");
 
         }
     }
@@ -73,7 +71,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
             editBtn.setOnClickListener(this);
             deleteBtn.setOnClickListener(this);
-
         }
 
         @Override
@@ -120,7 +117,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     notifyItemChanged(position, todo);
                     dialog.dismiss();
                 }
-
             });
         }
 
@@ -133,6 +129,4 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             notifyItemRemoved(position);
         }
     }
-
-
 }
